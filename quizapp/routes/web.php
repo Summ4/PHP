@@ -18,4 +18,22 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', 'QuizController@index');
+Route::get('/protected-route', function (Request $request) {
+    // ... logic ...
+})->middleware('myMiddleware');
+
+Route::group(['middleware' => ['myMiddleware']], function () {
+    Route::get('/route1', function (Request $request) {
+        return view('protected-route-1');
+    });
+    Route::get('/route2', function (Request $request) {
+        return response()->json(['message' => 'Protected route 2 accessed']);
+    });
+});
+
+Route::get('/error', function () {
+    return view('error');
+});
+
+
 
