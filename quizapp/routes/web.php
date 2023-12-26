@@ -35,5 +35,13 @@ Route::get('/error', function () {
     return view('error');
 });
 
+Route::domain('admin.example.com')->group(function () {
+    Route::resource('posts', AdminPostsController::class);
+});
+
+Route::get('/', [PostsController::class, 'index']);
+Route::get('/posts/{id}', [PostsController::class, 'show']);
+Route::post('/posts/{post}/comments', [PostsController::class, 'storeComment'])->name('posts.storeComment');
+
 
 
